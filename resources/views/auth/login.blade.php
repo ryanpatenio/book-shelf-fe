@@ -71,33 +71,20 @@
                 <div class="mb-4">
                     <label for="email" class="form-label">Email Address</label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                        value="{{ old('email', request()->cookie('email')) }}" 
+                        value="" 
                         id="email" name="email" placeholder="Enter your email" 
                         required 
                         autofocus >
 
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                  
                 </div>
                 <div class="mb-4">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                  
                 </div>
                
-                <div class="mb-4 form-check">
-                    <input type="checkbox" class="form-check-input" id="remember" name="remember"
-                    {{ old('remember', request()->cookie('remember') ? 'checked' : '') }}>
-
-                    <label class="form-check-label" for="remember">Remember Me</label>
-                </div>
+              
                 <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
             </form>
             <div class="divider my-4">OR</div>
@@ -120,49 +107,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </body>
 </html>
+<script src="{{asset('assets/auth/login.js')}}"></script>
 
-<script>
-    async function loginUser(event) {
-        event.preventDefault(); // Prevent the form from submitting normally
-
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const remember = document.getElementById("remember").checked; // Get the "Remember Me" checkbox state
-
-        try {
-            const response = await fetch('https://book-shelf-api-production.up.railway.app/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password, remember }),
-            });
-
-            const result = await response.json();
-
-            if(!response.ok){
-                alert('Login failed: ' + (result.message || 'Unknown error'));
-                return;
-            }
-            if(result.code != 0){
-                alert('Login failed: ' + (result.message || 'Unknown error'));
-                return;
-            }
-
-             // Store token in localStorage or sessionStorage
-            localStorage.setItem('auth_token', result.data.token);
-
-            alert('Login successful!');
-            console.log('Login response:', result);
-            
-           
-        } catch (error) {
-            // Handle network errors
-            alert('An error occurred: ' + error.message);
-        }
-    }
-
-    // Attach the function to the form submit event
-    document.getElementById("login").addEventListener("submit", loginUser);
-</script>
 

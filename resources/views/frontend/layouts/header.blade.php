@@ -1,3 +1,15 @@
+<style>
+    .auth-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px; /* Add spacing between buttons */
+}
+
+.auth-actions a {
+    display: inline-block; /* Ensure proper button alignment */
+}
+</style>
+
 <div id="header-wrap">
 
     <div class="top-content">
@@ -23,21 +35,27 @@
                 </div>
                 <div class="col-md-6">
                     <div class="right-element">
-                        @if(Auth::check())
 
-                        <form action="" method="POST">
-                            <button class="user-logout for-buy"><i class="icon icon-user"></i> Logout</button>
-                        </form>
+                        <div class="auth-actions">
+                            <a href="#" id="user-email-display"  class="user-account for-buy" style="display: none;">
+                                <i class="icon icon-user" ></i><span id="user-email"></span>
+                            </a>
 
-                        <a href="#" class="cart for-buy ml-2"><i class="icon icon-clipboard"></i><span>Cart:(0
-                            $)</span></a>
-                     @else 
-                        <a href="{{route('login')}}" class="user-account for-buy"><i
-                            class="icon icon-user"></i><span>Login</span></a>
+                            <a href="{{ route('login') }}" id="login-button" class="user-account for-buy" style="display: none;">
+                                <i class="icon icon-user"></i><span>Login</span>
+                            </a>
 
-                       
-                        @endif
-                        <div class="action-menu">
+                            <a href="#" id="cart" class="cart for-buy" style="display: none;">
+                                <i class="icon icon-clipboard"></i><span>Cart:(0 $)</span>
+                            </a>
+                        
+                            
+                            <a href="" id="logout-btn"  class="user-account for-buy" style="display: none;">
+                                <i class="icon icon-user"></i><span>Logout</span>
+                            </a>
+                        </div>
+
+                        {{-- <div class="action-menu">
 
                             <div class="search-bar">
                                 <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
@@ -48,9 +66,10 @@
                                         type="search">
                                 </form>
                             </div>
-                        </div>
+                        </div> --}}
 
                     </div><!--top-right-->
+                    
                 </div>
 
             </div>
@@ -78,8 +97,9 @@
                             <li class="menu-item {{ Request::is('popular') ? 'active' : '' }}"><a href="{{ url('popular') }}">Popular</a></li>
                             <li class="menu-item {{ Request::is('offers') ? 'active' : '' }}"><a href="{{ url('offers') }}">Offer</a></li>
                             <li class="menu-item {{ Request::is('articles') ? 'active' : '' }}"><a href="{{ url('articles') }}">Articles</a></li>
-                            <li class="menu-item {{ Request::is('mycollections') ? 'active' : '' }}"><a href="{{ url('mycollections') }}">My Collection</a></li>
-
+                           
+                            <li id="myCollection" class="menu-item {{ Request::is('mycollections') ? 'active' : '' }}"><a href="{{ url('mycollections') }}">My Collection</a></li>
+                           
                             </ul>
 
                             <div class="hamburger">
