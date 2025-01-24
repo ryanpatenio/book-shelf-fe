@@ -23,11 +23,20 @@
                 </div>
                 <div class="col-md-6">
                     <div class="right-element">
-                        <a href="#" class="user-account for-buy"><i
-                                class="icon icon-user"></i><span>Account</span></a>
-                        <a href="#" class="cart for-buy"><i class="icon icon-clipboard"></i><span>Cart:(0
-                                $)</span></a>
+                        @if(Auth::check())
 
+                        <form action="" method="POST">
+                            <button class="user-logout for-buy"><i class="icon icon-user"></i> Logout</button>
+                        </form>
+
+                        <a href="#" class="cart for-buy ml-2"><i class="icon icon-clipboard"></i><span>Cart:(0
+                            $)</span></a>
+                     @else 
+                        <a href="{{route('login')}}" class="user-account for-buy"><i
+                            class="icon icon-user"></i><span>Login</span></a>
+
+                       
+                        @endif
                         <div class="action-menu">
 
                             <div class="search-bar">
@@ -64,28 +73,13 @@
                     <nav id="navbar">
                         <div class="main-menu stellarnav">
                             <ul class="menu-list">
-                                <li class="menu-item active"><a href="{{url('/')}}">Home</a></li>
-                                <li class="menu-item has-sub">
-                                    <a href="#pages" class="nav-link">Pages</a>
+                                <li class="menu-item {{ Request::is('/') ? 'active' : '' }}"><a href="{{ url('/') }}">Home</a></li>             
+                            <li class="menu-item {{ Request::is('featured') ? 'active' : '' }}"><a href="{{ url('featured') }}">Featured</a></li>
+                            <li class="menu-item {{ Request::is('popular') ? 'active' : '' }}"><a href="{{ url('popular') }}">Popular</a></li>
+                            <li class="menu-item {{ Request::is('offers') ? 'active' : '' }}"><a href="{{ url('offers') }}">Offer</a></li>
+                            <li class="menu-item {{ Request::is('articles') ? 'active' : '' }}"><a href="{{ url('articles') }}">Articles</a></li>
+                            <li class="menu-item {{ Request::is('mycollections') ? 'active' : '' }}"><a href="{{ url('mycollections') }}">My Collection</a></li>
 
-                                    <ul>
-                                        <li class="active"><a href="index.html">Home</a></li>
-                                        <li><a href="index.html">About</a></li>
-                                        <li><a href="index.html">Styles</a></li>
-                                        <li><a href="index.html">Blog</a></li>
-                                        <li><a href="index.html">Post Single</a></li>
-                                        <li><a href="index.html">Our Store</a></li>
-                                        <li><a href="index.html">Product Single</a></li>
-                                        <li><a href="index.html">Contact</a></li>
-                                        <li><a href="index.html">Thank You</a></li>
-                                    </ul>
-
-                                </li>
-                                <li class="menu-item"><a href="{{url('featured')}}" class="nav-link">Featured</a></li>
-                                <li class="menu-item"><a href="{{url('popular')}}" class="nav-link">Popular</a></li>
-                                <li class="menu-item"><a href="{{url('offers')}}" class="nav-link">Offer</a></li>
-                                <li class="menu-item"><a href="{{url('articles')}}" class="nav-link">Articles</a></li>
-                                
                             </ul>
 
                             <div class="hamburger">
@@ -104,3 +98,26 @@
     </header>
 
 </div><!--header-wrap-->
+
+<script>
+    // Get the current full URL
+    const currentUrl = window.location.origin + window.location.pathname;
+
+    // Get all menu items
+    const menuItems = document.querySelectorAll("#navbar .menu-item");
+
+    // Loop through each menu item
+    menuItems.forEach((menuItem) => {
+        const link = menuItem.querySelector("a"); // Get the anchor tag within the menu item
+
+        if (link) {
+            const linkHref = link.href; // Full href from the anchor
+            if (currentUrl === linkHref) {
+                // Remove 'active' class from all items
+                menuItems.forEach((item) => item.classList.remove("active"));
+                // Add 'active' class to the matched menu item
+                menuItem.classList.add("active");
+            }
+        }
+    });
+</script>

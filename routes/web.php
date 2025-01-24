@@ -32,3 +32,15 @@ Route::get('/offers',function(){
 Route::get('/articles',function(){
     return view('frontend.articles');
 });
+Route::get('/mycollections',function(){
+    return view('frontend.my-collections');
+});
+
+Route::get('/login',function(){
+    return view('auth.login');
+})->name('login');
+
+Route::get('/register',function(){
+    return view('auth.register');
+})->name('register');
+
